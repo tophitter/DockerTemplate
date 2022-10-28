@@ -1,0 +1,15 @@
+.idea/
+PDO_Errors.log
+PDO_Sql.log
+/classes/vendor
+/classes/composer.lock
+/node_modules
+/package-lock.json
+/configs/global.config.php
+/configs/config.db.global.php
+/configs/config.db.default.php
+/configs/docusign.config.php
+/configs/config.db.website.php
+/configs/config.db.xero.php
+Dockerfile
+docker-compose.yml

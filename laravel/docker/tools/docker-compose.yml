@@ -1,0 +1,49 @@
+version: "3"
+name: exmaple_laravel_stack_name
+services:
+  exmaple_app:
+    build:
+      context: ./../../
+    container_name: exmaple_app
+    restart: on-failure
+    environment:
+      - APP_URL=http://localhost
+      - MYSQL_PORT_3306_TCP_ADDR=mariadb
+      - MYSQL_PORT_3306_TCP_PORT=3306
+      - MYSQL_DATABASE=exmaple_app
+      - MYSQL_USER=exmaple_app
+      - MYSQL_PASSWORD=jkwML.!eTtNpq62fGuWnnawL
+      - APP_KEY=base64:xbuk5cwqpfpzwG86jHjo6CLAi+rpzFf93jvgIy7LCUw=
+
+    command: >
+      bash -c "cp /var/www/app-configs/docker.env /var/www/html/.env && chown -R docker:staff /var/www/html/  && /entrypoint.sh"
+    volumes:
+      - './../../:/var/www/html'
+    networks:
+      - default
+    ports:
+      - 80:80
+      - 443:443
+
+  mariadb:
+    container_name: exmaple_app_db
+    image: 'mariadb:10.1'
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: g9eh9G63Wj7sAwmVajWExZ6W
+      MYSQL_DATABASE: 'exmaple_app'
+      MYSQL_USER: 'exmaple_app'
+      MYSQL_PASSWORD: 'jkwML.!eTtNpq62fGuWnnawL'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'mariadb:/var/lib/mariadb'
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-pg9eh9G63Wj7sAwmVajWExZ6W"]
+        retries: 3
+        timeout: 5s
+    networks:
+      - default
+volumes:
+  mariadb:
+    driver: local

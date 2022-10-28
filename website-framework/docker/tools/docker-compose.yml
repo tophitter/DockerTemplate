@@ -1,0 +1,49 @@
+version: "3"
+
+name: exmaple_website_framework_stack_name
+services:
+  exmaple_app:
+    build:
+      context: ./../../
+    container_name: exmaple_app
+    restart: on-failure
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=exmaple_app
+      - MYSQL_USER=exmaple_app
+      - MYSQL_PASSWORD=jkwML.!eTtNpq62fGuWnnawL
+
+      - MYSQL_GLOBAL_HOST=mariadb
+      - MYSQL_GLOBAL_PORT=3306
+      - MYSQL_GLOBAL_DATABASE=exmaple_app
+      - MYSQL_GLOBAL_USER=exmaple_app
+      - MYSQL_GLOBAL_PASSWORD=jkwML.!eTtNpq62fGuWnnawL
+    command: >
+      bash -c "cp /var/www/html/public/docker/configs/*.php /var/www/html/public/app/configs/ && chown -R docker:staff /var/www/html/public/  && /entrypoint.sh"
+    volumes:
+      - './../../:/var/www/html/public'
+    networks:
+      - default
+    ports:
+      - 8080:80
+
+  mariadb:
+    container_name: exmaple_app_db
+    image: 'mariadb:10.1'
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: g9eh9G63Wj-7swmVajWExZ6W
+      MYSQL_DATABASE: 'exmaple_app'
+      MYSQL_USER: 'exmaple_app'
+      MYSQL_PASSWORD: 'jkwML.!eTtNpq62fGuWnnawL'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'mariadb:/var/lib/mariadb'
+    networks:
+      - default
+
+volumes:
+  mariadb:
+    driver: local
